@@ -1,4 +1,5 @@
 import React from 'react';
+import boyIcon from '../../assets/boy.svg';
 
 const PersonalDetails = props => (
   <div>
@@ -9,13 +10,19 @@ const PersonalDetails = props => (
           <label className="content-form__label" htmlFor="name">Job Title</label>
           <input className="content-form__field" type="text" name="job" defaultValue={props.details.job}/>
         </div>
+        <div className="content-form__item content-form__item-upload-image">
+          <div className="content-form__img-content-logo">
+            <img className="content-form__img" src={boyIcon} alt="boy"/>
+          </div>
+          <p className="content-form__item-upload-image--title">Upload photo</p>
+        </div>
         <div className="content-form__item">
           <label className="content-form__label" htmlFor="name">First Name</label>
           <input className="content-form__field" type="text" name="first_name" defaultValue={props.details.first_name}/>
         </div>
         <div className="content-form__item">
           <label className="content-form__label" htmlFor="name">Last Name</label>
-          <input className="content-form__field" type="text" name="last_name"/>
+          <input className="content-form__field" type="text" name="last_name" defaultValue={props.details.last_name}/>
         </div>
         <div className="content-form__item">
           <label className="content-form__label" htmlFor="name">Email</label>

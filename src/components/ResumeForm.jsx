@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Editor, EditorState, RichUtils } from 'draft-js';
 import * as actions from '../actions/';
+import { Cropper } from 'react-image-cropper';
 import AccentColor from './AccentColor/';
 import PersonalDetails from './PersonalDetails/';
-import 'draft-js/dist/Draft.css';
+import Payix from '../assets/payix.jpg';
 
 class ResumeForm extends Component {
-
-  state = {
-    editorState: EditorState.createEmpty()
-  }
 
   fillForm = (e) => {
     let form =  new FormData(e.target.form);
@@ -25,13 +21,8 @@ class ResumeForm extends Component {
     this.props.actions.addPersonalDetails(data);
   }
 
-  handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.onChange(newState);
-      return 'handled';
-    }
-    return 'not-handled';
+  cropPhoto = () => {
+    this.setState({image: this.cropper.crop()})
   }
 
   render() {
@@ -52,10 +43,6 @@ class ResumeForm extends Component {
         <PersonalDetails 
           fillForm={this.fillForm}
           details={this.props.details}
-        />
-        <Editor 
-          editorState={this.state.editorState}
-          handleKeyCommand={this.handleKeyCommand}
         />
       </section>
     )

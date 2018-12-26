@@ -2,7 +2,7 @@
  &__form {
    display: grid;
    grid-template-columns: repeat(2,1fr);
-   grid-gap: 5px;
+   grid-gap: 13px;
    margin-top: 10px;
  }
  &__item  {
@@ -44,5 +44,28 @@
    font-weight: 300;
    font-size: 16px;
    line-height: 22px;
+ }
+ &__item-upload-image {
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   &--title {
+     color: $light_blue;
+     margin-left: 20px;
+   }
+ }
+ &__img-content-logo {
+   background: $sky_blue;
+   width: 70px;
+   height: 100%;
+   padding: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 5px;
+ }
+ &__img {
+   display: block;
+   width: 30px;
  }
 }
