@@ -52,9 +52,13 @@ class ResumeForm extends Component {
           openModal={this.openModal}
         />
         <ModalContainer>
-          <Cropper
-              src={Payix}
-            />
+          <div className="content-wrapper">
+            <Cropper
+                src={Payix}
+                styles={{width:400,height:400}}
+                ref={ ref => { this.cropper = ref }}
+              />
+          </div>
         </ModalContainer>
       </section>
     )
