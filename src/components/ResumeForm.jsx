@@ -7,6 +7,8 @@ import AccentColor from './AccentColor/';
 import PersonalDetails from './PersonalDetails/';
 import Payix from '../assets/payix.jpg';
 
+import ModalContainer from './widgets/ModalContainer';
+
 class ResumeForm extends Component {
 
   fillForm = (e) => {
@@ -23,6 +25,10 @@ class ResumeForm extends Component {
 
   cropPhoto = () => {
     this.setState({image: this.cropper.crop()})
+  }
+
+  openModal = () => {
+    this.props.actions.openModal(true);
   }
 
   render() {
@@ -43,7 +49,13 @@ class ResumeForm extends Component {
         <PersonalDetails 
           fillForm={this.fillForm}
           details={this.props.details}
+          openModal={this.openModal}
         />
+        <ModalContainer>
+          <Cropper
+              src={Payix}
+            />
+        </ModalContainer>
       </section>
     )
   }

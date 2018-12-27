@@ -10,7 +10,7 @@ const PersonalDetails = props => (
           <label className="content-form__label" htmlFor="name">Job Title</label>
           <input className="content-form__field" type="text" name="job" defaultValue={props.details.job}/>
         </div>
-        <div className="content-form__item content-form__item-upload-image">
+        <div className="content-form__item content-form__item-upload-image" onClick={props.openModal}>
           <div className="content-form__img-content-logo">
             <img className="content-form__img" src={boyIcon} alt="boy"/>
           </div>

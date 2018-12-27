@@ -17,3 +17,12 @@ export const addPersonalDetails = data => {
     }
   }
 }
+
+export const openModal = status => {
+  return {
+    type: 'OPEN_AND_CLOSE_MODAL',
+    payload: {
+      status
+    }
+  }
+}
