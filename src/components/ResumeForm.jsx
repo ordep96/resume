@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/';
-import { Cropper } from 'react-image-cropper';
+//import { Cropper } from 'react-image-cropper';
+import Cropper from 'react-cropper';
 import AccentColor from './AccentColor/';
 import PersonalDetails from './PersonalDetails/';
 import Payix from '../assets/payix.jpg';
+import 'cropperjs/dist/cropper.css';
 
 import ModalContainer from './widgets/ModalContainer';
 
 class ResumeForm extends Component {
+
+  state = {
+    img: null
+  }
 
   fillForm = (e) => {
     let form =  new FormData(e.target.form);
@@ -23,12 +29,19 @@ class ResumeForm extends Component {
     this.props.actions.addPersonalDetails(data);
   }
 
-  cropPhoto = () => {
-    this.setState({image: this.cropper.crop()})
+  onCrop = () => {
+    const dataUrl = this.refs.cropper.getCroppedCanvas().toDataURL();
+    return dataUrl;
   }
 
   openModal = () => {
     this.props.actions.openModal(true);
+  }
+
+  selectCrop = () => {
+    this.setState({
+      img: this.onCrop()
+    })
   }
 
   render() {
@@ -54,10 +67,19 @@ class ResumeForm extends Component {
         <ModalContainer>
           <div className="content-wrapper">
             <Cropper
-                src={Payix}
-                styles={{width:400,height:400}}
-                ref={ ref => { this.cropper = ref }}
-              />
+              ref='cropper'
+              src={Payix}
+              crop={this.onCrop}
+              guides={true}
+            />
+            {
+              this.state.img !== null 
+                ? ( 
+                  <img src={this.state.img} alt=""/>
+                )
+                : null
+            }
+            <button onClick={this.selectCrop}>Select Crop</button>
           </div>
         </ModalContainer>
       </section>
