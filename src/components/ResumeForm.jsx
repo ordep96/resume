@@ -2,20 +2,17 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/';
-//import { Cropper } from 'react-image-cropper';
-import Cropper from 'react-cropper';
+/*import { Cropper } from 'react-image-cropper';*/
+/*import Cropper from 'react-cropper';*/
+import AvatarEditor from 'react-avatar-editor'
 import AccentColor from './AccentColor/';
 import PersonalDetails from './PersonalDetails/';
 import Payix from '../assets/payix.jpg';
-import 'cropperjs/dist/cropper.css';
+/*import 'cropperjs/dist/cropper.css';*/
 
 import ModalContainer from './widgets/ModalContainer';
 
 class ResumeForm extends Component {
-
-  state = {
-    img: null
-  }
 
   fillForm = (e) => {
     let form =  new FormData(e.target.form);
@@ -29,20 +26,18 @@ class ResumeForm extends Component {
     this.props.actions.addPersonalDetails(data);
   }
 
-  onCrop = () => {
-    const dataUrl = this.refs.cropper.getCroppedCanvas().toDataURL();
-    return dataUrl;
-  }
-
   openModal = () => {
     this.props.actions.openModal(true);
   }
 
-  selectCrop = () => {
-    this.setState({
-      img: this.onCrop()
-    })
+  onClickSave = () => {
+    if (this.editor) {
+      const canvasScaled = this.editor.getImageScaledToCanvas()
+      console.log(canvasScaled.toDataURL());
+    }
   }
+
+  setEditorRef = (editor) => this.editor = editor
 
   render() {
     return(
@@ -66,20 +61,14 @@ class ResumeForm extends Component {
         />
         <ModalContainer>
           <div className="content-wrapper">
-            <Cropper
-              ref='cropper'
-              src={Payix}
-              crop={this.onCrop}
-              guides={true}
-            />
-            {
-              this.state.img !== null 
-                ? ( 
-                  <img src={this.state.img} alt=""/>
-                )
-                : null
-            }
-            <button onClick={this.selectCrop}>Select Crop</button>
+           <AvatarEditor
+            ref={this.setEditorRef}
+            image={Payix} 
+            width={450}
+            height={200}
+            scale={1.2}
+           />
+            <button onClick={this.onClickSave}>Select Crop</button>
           </div>
         </ModalContainer>
       </section>
