@@ -45,6 +45,17 @@ body {
 }
 
 .content-wrapper {
-  width: 400px;
+  width: 500px;
   transform-style: preserve-3d;
+  margin: auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  display: block;
 }

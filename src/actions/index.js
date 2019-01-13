@@ -26,3 +26,12 @@ export const openModal = status => {
     }
   }
 }
+
+export const addProfileImg = img => {
+  return {
+    type: 'ADD_PROFILE_IMG',
+    payload: {
+      img
+    }
+  }
+}

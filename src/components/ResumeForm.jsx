@@ -12,7 +12,14 @@ import Payix from '../assets/payix.jpg';
 
 import ModalContainer from './widgets/ModalContainer';
 
+import PictureIcon from '../assets/picture.svg';
+
 class ResumeForm extends Component {
+
+  state = {
+    scale: 1,
+    imgToCrop: null
+  }
 
   fillForm = (e) => {
     let form =  new FormData(e.target.form);
@@ -33,7 +40,28 @@ class ResumeForm extends Component {
   onClickSave = () => {
     if (this.editor) {
       const canvasScaled = this.editor.getImageScaledToCanvas()
-      console.log(canvasScaled.toDataURL());
+      this.props.actions.addProfileImg(canvasScaled.toDataURL());
+      this.props.actions.openModal(false)
+    }
+  }
+
+  handleScale = e => {
+    const scale = parseFloat(e.target.value)
+    this.setState({ scale })
+  }
+
+  uploadImage = (e) => {
+    console.log(e.target);
+    let file = e.target.files[0];
+    this.setState({imgToCrop:file})
+  }
+  
+  editOrRemovePicture = (e) => {
+    e.preventDefault();
+    let target = e.target;
+  
+    if(target.getAttribute('data-action') === 'edit') {
+
     }
   }
 
@@ -58,17 +86,46 @@ class ResumeForm extends Component {
           fillForm={this.fillForm}
           details={this.props.details}
           openModal={this.openModal}
+          imgProfile={this.props.imgProfile}
+          editOrRemovePicture={this.editOrRemovePicture}
         />
         <ModalContainer>
           <div className="content-wrapper">
-           <AvatarEditor
-            ref={this.setEditorRef}
-            image={Payix} 
-            width={450}
-            height={200}
-            scale={1.2}
-           />
-            <button onClick={this.onClickSave}>Select Crop</button>
+            {
+              this.state.imgToCrop !== null
+                ? (
+                  <div className="modal__content-img-cropper">
+                    <AvatarEditor
+                      ref={this.setEditorRef}
+                      image={this.state.imgToCrop}
+                      width={250}
+                      height={200}
+                      scale={this.state.scale}
+                    />    
+                    <input
+                      className="modal__range-field"
+                      onChange={this.handleScale}
+                      type="range"
+                      min="1"
+                      max="2"
+                      step="0.01"
+                      defaultValue="1"
+                    />
+                    <button onClick={this.onClickSave}>Save</button>              
+                  </div>
+                )
+                : (
+                  <div>
+                    <h2>Upload Profile Picture</h2>
+                    <p>This photo is displayed on your resume</p>
+                    <div className="modal__upload-file-content">
+                      <img className="modal__upload-icon" src={PictureIcon} alt="upload img"/>
+                      <p className="modal__description text-center">Drag & drop or select a photo from your computer. Supported formats: jpeg & png</p>
+                      <input className="modal__field" type="file" onChange={this.uploadImage}/>
+                    </div>
+                  </div>
+                )            
+            }
           </div>
         </ModalContainer>
       </section>
@@ -79,7 +136,8 @@ class ResumeForm extends Component {
 const mapStateToProps = (state,props) => {
   return {
     selectColor: state.color.selectColor,
-    details: state.personalDetails.details
+    details: state.personalDetails.details,
+    imgProfile: state.imgProfile.img
   }
 }
 

@@ -6,10 +6,23 @@ class ResumeFinal extends Component {
   render() {
     console.log(this.props.details)
     return(
-      <section className="resume-column resume__final">
+      <section className="resume-column resume__final user-resume">
         <div className="resumen-canvas">
-          <h2>{this.props.details.first_name} {this.props.details.last_name}</h2>
-          <p>{this.props.details.job}</p>
+          <div className="user-resume__content-name-description">
+            {
+              this.props.imgProfile !== null
+                ?(
+                  <div className="user-resume__img">
+                    <img className="user-resume__img" src={this.props.imgProfile} alt="img Profile"/>
+                  </div>
+                )
+                : null
+            }
+            <div className="user-resume__description">
+              <h2>{this.props.details.first_name} {this.props.details.last_name}</h2>
+              <p>{this.props.details.job}</p>
+            </div>
+          </div>
         </div>
       </section>
     )
@@ -19,7 +32,8 @@ class ResumeFinal extends Component {
 const mapStateToProps = (state, props) => {
   return {
     selectColor: state.color.selectColor,
-    details: state.personalDetails.details
+    details: state.personalDetails.details,
+    imgProfile: state.imgProfile.img
   }
 }
 

@@ -26,4 +26,45 @@
   &.active-modal {
     transform: translate3d(0,0,0);
   }
+
+  &__upload-icon {
+    display: block;
+    width: 20%;
+    margin: auto;
+  }
+  &__upload-file-content {
+    position: relative;
+    padding: 20px;
+    border: 1px dashed $light_blue;
+    margin-top: 20px;
+  }
+  &__field {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+  }
+  input[type="range"] {
+    display: block;
+    -webkit-appearance: none;
+    background-color: #bdc3c7;
+    width: 200px;
+    height: 5px;
+    border-radius: 5px;
+    margin: 0 auto;
+    outline: 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #e74c3c;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+  }
 }
