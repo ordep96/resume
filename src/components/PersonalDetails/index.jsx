@@ -45,11 +45,11 @@ const PersonalDetails = props => (
         </div>
         <div className="content-form__item">
           <label className="content-form__label" htmlFor="name">Email</label>
-          <input className="content-form__field" type="text" name="email"/>
+          <input className="content-form__field" type="text" name="email" defaultValue={props.details.email}/>
         </div>
         <div className="content-form__item">
           <label className="content-form__label" htmlFor="name">Phone</label>
-          <input className="content-form__field" type="text" name="phone"/>
+          <input className="content-form__field" type="text" name="phone" defaultValue={props.details.phone}/>
         </div>
       </form>
     </div>

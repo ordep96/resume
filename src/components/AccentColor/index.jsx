@@ -30,7 +30,6 @@ class AccentColor extends Component {
 }
 
 const mapStateToProps = (state,props) => {
-  console.log(state)
   return {
     state
   }

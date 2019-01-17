@@ -35,3 +35,27 @@ export const addProfileImg = img => {
     }
   }
 }
+
+export const addImgToCrop = img => {
+  return {
+    type: 'ADD_IMG_TO_CROP',
+    payload: {
+      img
+    }
+  }
+}
+
+export const scaleImg = scale => {
+  return {
+    type: 'SCALE_IMG',
+    payload: {
+      scale
+    }
+  }
+}
+
+export const deleteImg = () => {
+  return {
+    type: 'DELETE_IMG'
+  }
+}

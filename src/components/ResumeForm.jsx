@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/';
-/*import { Cropper } from 'react-image-cropper';*/
-/*import Cropper from 'react-cropper';*/
 import AvatarEditor from 'react-avatar-editor'
 import AccentColor from './AccentColor/';
 import PersonalDetails from './PersonalDetails/';
 import Payix from '../assets/payix.jpg';
-/*import 'cropperjs/dist/cropper.css';*/
 
 import ModalContainer from './widgets/ModalContainer';
 
 import PictureIcon from '../assets/picture.svg';
 
 class ResumeForm extends Component {
-
-  state = {
-    scale: 1,
-    imgToCrop: null
-  }
 
   fillForm = (e) => {
     let form =  new FormData(e.target.form);
@@ -30,6 +22,7 @@ class ResumeForm extends Component {
       email: form.get('email'),
       phone: form.get('phone')
     }
+    console.log(data)
     this.props.actions.addPersonalDetails(data);
   }
 
@@ -39,6 +32,7 @@ class ResumeForm extends Component {
 
   onClickSave = () => {
     if (this.editor) {
+      console.log(this.editor);
       const canvasScaled = this.editor.getImageScaledToCanvas()
       this.props.actions.addProfileImg(canvasScaled.toDataURL());
       this.props.actions.openModal(false)
@@ -47,13 +41,16 @@ class ResumeForm extends Component {
 
   handleScale = e => {
     const scale = parseFloat(e.target.value)
-    this.setState({ scale })
+    this.props.actions.scaleImg(scale);
   }
 
   uploadImage = (e) => {
-    console.log(e.target);
     let file = e.target.files[0];
-    this.setState({imgToCrop:file})
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      this.props.actions.addImgToCrop(reader.result);
+    }
+    reader.readAsDataURL(file);
   }
   
   editOrRemovePicture = (e) => {
@@ -61,7 +58,11 @@ class ResumeForm extends Component {
     let target = e.target;
   
     if(target.getAttribute('data-action') === 'edit') {
+      this.props.actions.openModal(true)
+    }
 
+    if(target.getAttribute('data-action') === 'delete') {
+      this.props.actions.deleteImg();
     }
   }
 
@@ -86,21 +87,21 @@ class ResumeForm extends Component {
           fillForm={this.fillForm}
           details={this.props.details}
           openModal={this.openModal}
-          imgProfile={this.props.imgProfile}
+          imgProfile={this.props.imgCrop}
           editOrRemovePicture={this.editOrRemovePicture}
         />
         <ModalContainer>
           <div className="content-wrapper">
             {
-              this.state.imgToCrop !== null
+              this.props.imgToCrop !== null
                 ? (
                   <div className="modal__content-img-cropper">
                     <AvatarEditor
                       ref={this.setEditorRef}
-                      image={this.state.imgToCrop}
+                      image={this.props.imgToCrop}
                       width={250}
                       height={200}
-                      scale={this.state.scale}
+                      scale={this.props.scaleImg}
                     />    
                     <input
                       className="modal__range-field"
@@ -109,7 +110,7 @@ class ResumeForm extends Component {
                       min="1"
                       max="2"
                       step="0.01"
-                      defaultValue="1"
+                      defaultValue={this.props.scaleImg}
                     />
                     <button onClick={this.onClickSave}>Save</button>              
                   </div>
@@ -134,10 +135,13 @@ class ResumeForm extends Component {
 }  
 
 const mapStateToProps = (state,props) => {
+  console.log(state)
   return {
     selectColor: state.color.selectColor,
     details: state.personalDetails.details,
-    imgProfile: state.imgProfile.img
+    imgToCrop: state.imgProfile.imgToCrop,
+    imgCrop: state.imgProfile.imgCrop,
+    scaleImg: state.imgProfile.scaleImg
   }
 }
 
