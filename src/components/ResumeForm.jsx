@@ -5,9 +5,11 @@ import * as actions from '../actions/';
 import AvatarEditor from 'react-avatar-editor'
 import AccentColor from './AccentColor/';
 import PersonalDetails from './PersonalDetails/';
+import Editor from './Editor/';
 import Payix from '../assets/payix.jpg';
 
 import ModalContainer from './widgets/ModalContainer';
+import SectionForm from './SectionForm/';
 
 import PictureIcon from '../assets/picture.svg';
 
@@ -66,6 +68,7 @@ class ResumeForm extends Component {
     }
   }
 
+
   setEditorRef = (editor) => this.editor = editor
 
   render() {
@@ -90,6 +93,7 @@ class ResumeForm extends Component {
           imgProfile={this.props.imgCrop}
           editOrRemovePicture={this.editOrRemovePicture}
         />
+        <Editor />
         <ModalContainer>
           <div className="content-wrapper">
             {

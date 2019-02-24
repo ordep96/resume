@@ -3,6 +3,19 @@ import { connect } from 'react-redux';
 
 class ResumeFinal extends Component {
 
+  renderProfile = () => {
+    let contentProfile = document.querySelector('.content-profile');
+        contentProfile.innerHTML = this.props.profile
+  }
+
+  componentDidMount() {
+    this.renderProfile()
+  }
+
+  componentDidUpdate() {
+    this.renderProfile();
+  }
+
   render() {
     return(
       <section className="resume-column resume__final user-resume">
@@ -22,9 +35,12 @@ class ResumeFinal extends Component {
               <p>{this.props.details.job}</p>
             </div>
           </div>
-          <div class="resumen-canvas__content">
+          <div className="content-profile">
+            <h2>Profile</h2>
+          </div>
+          <div className="resumen-canvas__content">
             <div></div>
-            <div class="user-resume__details">
+            <div className="user-resume__details">
               <h2>Details</h2>
               <p>{this.props.details.email}</p>
               <p>{this.props.details.phone}</p>
@@ -37,10 +53,12 @@ class ResumeFinal extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  console.log(state)
   return {
     selectColor: state.color.selectColor,
     details: state.personalDetails.details,
-    imgCrop: state.imgProfile.imgCrop
+    imgCrop: state.imgProfile.imgCrop,
+    profile: state.profile.profile
   }
 }
 

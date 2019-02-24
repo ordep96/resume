@@ -59,3 +59,12 @@ export const deleteImg = () => {
     type: 'DELETE_IMG'
   }
 }
+
+export const addProfile = (profile) => {
+  return {
+    type: 'ADD_PROFILE',
+    payload: {
+      profile
+    }
+  }
+}
